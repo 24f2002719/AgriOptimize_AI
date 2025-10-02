@@ -1,0 +1,28 @@
+# Python virtual environment folders
+# These contain thousands of files and should never be committed.
+venv/
+/backend/venv/
+/ml/venv/
+/fertilizer_model/venv/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# IDE/Editor specific files
+.vscode/
+.idea/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Sensitive files - Although we don't have them yet, it's good practice.
+# For example, if you had a .env file for your API key.
+*.env
+
+# Saved model files - Optional but good practice for large models.
+# Committing small models like ours is okay, but for larger models,
+# you would typically host them elsewhere (like S3) and not in Git.
+# Uncomment the lines below if you don't want to commit the .pkl files.
+# *.pkl
