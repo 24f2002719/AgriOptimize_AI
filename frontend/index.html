@@ -3,296 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgriOptimize AI - Modern Farming Assistant</title>
-    
+    <title>AgriOptimize AI - Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        /* Use Poppins as the default font */
-        body { 
-            font-family: 'Poppins', sans-serif;
-            background-color: #f9fafb; /* Lighter gray background */
-        }
-
-        /* Custom animation for fading in elements */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-        
-        /* Loading spinner animation */
-        .spinner {
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #fff;
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Tab Styles */
-        .tab-btn {
-            transition: all 0.3s ease;
-        }
-        .tab-btn.active {
-            border-bottom-color: #16a34a; /* green-600 */
-            color: #15803d; /* green-700 */
-            font-weight: 600;
-        }
-
-        /* Chatbot Styles (Same as before) */
-        #chat-window { display: none; z-index: 50; }
-        #chat-box::-webkit-scrollbar { width: 6px; }
-        #chat-box::-webkit-scrollbar-track { background: #f1f1f1; }
-        #chat-box::-webkit-scrollbar-thumb { background: #888; border-radius: 3px; }
-        .msg-user { background-color: #dcfce7; align-self: flex-end; margin-left: auto; border-bottom-right-radius: 0; }
-        .msg-agro { background-color: #f3f4f6; align-self: flex-start; margin-right: auto; border-bottom-left-radius: 0; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="text-gray-800 relative min-h-screen">
+<body class="min-h-screen flex flex-col">
 
-
-    <header class="bg-white shadow-sm sticky top-0 z-40">
+    <!-- Header & Navbar -->
+    <header class="glass-nav sticky top-0 z-40">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <svg class="w-8 h-8 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375" />
-                </svg>
+            <!-- CORRECTED LOGO: Properly sized SVG Icon -->
+            <a href="index.html" class="flex items-center gap-2">
+                <svg class="w-8 h-8 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375" /></svg>
                 <h1 class="text-2xl font-bold text-gray-800">AgriOptimize <span class="text-green-600">AI</span></h1>
-            </div>
-            <nav class="hidden md:flex items-center gap-6 text-gray-600 font-medium">
-                <a href="#" class="hover:text-green-600 transition">Home</a>
-                <a href="#" class="hover:text-green-600 transition">About</a>
-                <a href="#" class="hover:text-green-600 transition">Contact</a>
+            </a>
+            <nav class="hidden md:flex items-center gap-8 text-gray-600 font-medium">
+                <a href="index.html" class="nav-link active py-2">Home</a>
+                <a href="crop.html" class="nav-link py-2">Crop Recommendation</a>
+                <a href="fertilizer.html" class="nav-link py-2">Fertilizer Recommendation</a>
             </nav>
         </div>
     </header>
 
-    <div class="container mx-auto p-4 md:p-8 pb-32">
-        <div class="text-center mb-12">
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-800">AI-Powered Farming Intelligence</h2>
-            <p class="text-lg text-gray-500 mt-3 max-w-2xl mx-auto">Get instant, data-driven recommendations to optimize your yield and resource management.</p>
-        </div>
-
-        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-2">
-            <div class="border-b border-gray-200 mb-6">
-                <nav class="flex justify-center -mb-px" aria-label="Tabs">
-                    <button id="tab-crop" class="tab-btn active w-1/2 py-4 px-1 border-b-2 text-center text-lg font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                        Crop Recommendation
-                    </button>
-                    <button id="tab-fertilizer" class="tab-btn w-1/2 py-4 px-1 border-b-2 text-center text-lg font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                        Fertilizer Recommendation
-                    </button>
-                </nav>
-            </div>
-
-            <div class="px-2 md:px-8 pb-8">
-                <div id="form-crop-container">
-                    <form id="crop-form" class="space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <input type="number" step="any" name="crop-n" placeholder="Nitrogen (N)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500" required>
-                            <input type="number" step="any" name="crop-p" placeholder="Phosphorus (P)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500" required>
-                            <input type="number" step="any" name="crop-k" placeholder="Potassium (K)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500" required>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <input type="number" step="any" name="crop-temp" placeholder="Temperature (°C)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500" required>
-                            <input type="number" step="any" name="crop-humidity" placeholder="Humidity (%)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500" required>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <input type="number" step="any" name="crop-ph" placeholder="Soil pH" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500" required>
-                            <input type="number" step="any" name="crop-rainfall" placeholder="Rainfall (mm)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500" required>
-                        </div>
-                        <button type="submit" class="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition font-semibold text-lg flex items-center justify-center gap-2 disabled:bg-green-400">
-                            <span class="btn-text">Recommend Crop</span>
-                            <div class="spinner hidden"></div>
-                        </button>
-                    </form>
-                    <div id="crop-result" class="hidden"></div>
-                </div>
-
-                <div id="form-fertilizer-container" class="hidden">
-                     <form id="fertilizer-form" class="space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <input type="number" step="any" name="fert-temp" placeholder="Temp (°C)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500" required>
-                            <input type="number" step="any" name="fert-humidity" placeholder="Humidity (%)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500" required>
-                            <input type="number" step="any" name="fert-moisture" placeholder="Moisture" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500" required>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <select name="fert-soil" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500" required>
-                                <option value="">-- Select Soil Type --</option>
-                                <option>Sandy</option> <option>Loamy</option> <option>Black</option> <option>Red</option> <option>Clayey</option>
-                            </select>
-                            <select name="fert-crop" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500" required>
-                                <option value="">-- Select Crop Type --</option>
-                                <option>Maize</option> <option>Sugarcane</option> <option>Cotton</option> <option>Tobacco</option> <option>Paddy</option> <option>Barley</option> <option>Wheat</option> <option>Millets</option> <option>Oil seeds</option> <option>Pulses</option>
-                            </select>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <input type="number" step="any" name="fert-n" placeholder="Nitrogen (N)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500" required>
-                            <input type="number" step="any" name="fert-p" placeholder="Phosphorous (P)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500" required>
-                            <input type="number" step="any" name="fert-k" placeholder="Potassium (K)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500" required>
-                        </div>
-                        <button type="submit" class="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition font-semibold text-lg flex items-center justify-center gap-2 disabled:bg-green-400">
-                             <span class="btn-text">Recommend Fertilizer</span>
-                             <div class="spinner hidden"></div>
-                        </button>
-                    </form>
-                    <div id="fertilizer-result" class="hidden"></div>
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="hero-bg text-white">
+            <div class="min-h-[70vh] container mx-auto px-6 flex flex-col items-center justify-center text-center">
+                <h2 class="text-5xl md:text-7xl font-bold leading-tight">Smarter Farming, Better Yields</h2>
+                <p class="text-xl text-gray-200 mt-4 max-w-3xl mx-auto">Leverage Artificial Intelligence to make data-driven decisions for your farm. Get instant recommendations and chat with our AI assistant, Agro.</p>
+                <div class="mt-8 flex flex-wrap justify-center gap-4">
+                    <a href="crop.html" class="bg-green-600 text-white px-8 py-3 rounded-full font-semibold text-lg hover:bg-green-700 transition transform hover:scale-105">Get Crop Recommendation</a>
+                    <a href="fertilizer.html" class="bg-white/20 backdrop-blur-sm text-white border-2 border-white px-8 py-3 rounded-full font-semibold text-lg hover:bg-white/30 transition transform hover:scale-105">Find Best Fertilizer</a>
                 </div>
             </div>
-        </div>
-    </div>
-    
+        </section>
+
+        <!-- Features Section -->
+        <section id="about" class="py-20 fade-in">
+             <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-4xl font-bold text-gray-800">Common Problems, Intelligent Solutions</h3>
+                    <p class="text-lg text-gray-500 mt-2">How AI helps tackle everyday farming challenges.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="feature-card bg-white p-8 rounded-lg shadow-lg text-center">
+                        <div class="bg-green-100 inline-block p-4 rounded-full"><svg class="w-10 h-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" /></svg></div>
+                        <h4 class="font-bold text-xl mt-4">Uncertain Crop Choices</h4>
+                        <p class="text-gray-500 mt-2">Our AI analyzes 7 key factors to recommend the most profitable and suitable crop for your specific conditions.</p>
+                    </div>
+                    <div class="feature-card bg-white p-8 rounded-lg shadow-lg text-center">
+                         <div class="bg-green-100 inline-block p-4 rounded-full"><svg class="w-10 h-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg></div>
+                        <h4 class="font-bold text-xl mt-4">Inefficient Fertilizer Use</h4>
+                        <p class="text-gray-500 mt-2">Our model predicts the exact fertilizer needed, optimizing nutrient balance and cutting unnecessary costs.</p>
+                    </div>
+                    <div class="feature-card bg-white p-8 rounded-lg shadow-lg text-center">
+                         <div class="bg-green-100 inline-block p-4 rounded-full"><svg class="w-10 h-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.17 48.17 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" /></svg></div>
+                        <h4 class="font-bold text-xl mt-4">Lack of Quick Information</h4>
+                        <p class="text-gray-500 mt-2">Chat with "Agro", our 24/7 AI assistant, for instant advice on a wide range of agricultural topics.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section (HTML is the same, styles are improved) -->
+    </main>
+
+    <!-- ================= AGRO CHATBOT UI ================= -->
+    <!-- Floating Button -->
     <button id="chat-toggle-btn" class="fixed bottom-6 right-6 bg-green-700 hover:bg-green-800 text-white p-4 rounded-full shadow-lg transition transform hover:scale-105 z-50 flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.17 48.17 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" /></svg>
         <span class="font-semibold hidden sm:block">Chat with Agro</span>
     </button>
-    <div id="chat-window" class="fixed bottom-24 right-6 w-full max-w-sm h-[500px] bg-white rounded-xl shadow-2xl flex flex-col border border-gray-200">
+    <!-- Chat Window -->
+    <div id="chat-window" class="fixed bottom-24 right-6 w-full max-w-sm h-[500px] bg-white rounded-xl shadow-2xl flex-col border border-gray-200">
         <div class="bg-green-700 text-white p-4 rounded-t-xl flex justify-between items-center"><div class="font-bold flex items-center gap-2">🌱 Agro Assistant</div><button id="chat-close-btn" class="text-gray-200 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg></button></div>
-        <div id="chat-box" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3 bg-gray-50"><div class="p-3 rounded-lg shadow-sm text-sm max-w-[85%] msg-agro">Hello! I'm <strong>Agro</strong>, your farming assistant. How can I help you today?</div></div>
+        <div id="chat-box" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3 bg-gray-50"><div class="p-3 rounded-xl shadow-sm text-sm max-w-[85%] msg-agro">Hello! I'm <strong>Agro</strong>. How can I help you today?</div></div>
         <div class="p-3 border-t bg-white rounded-b-xl flex gap-2"><input type="text" id="chat-input" class="flex-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Type your question..."><button id="chat-send-btn" class="bg-green-600 text-white p-2 rounded-md hover:bg-green-700 transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" /></svg></button></div>
     </div>
 
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-800 text-white mt-auto">
+         <div class="container mx-auto px-6 py-12 text-center"><h3 class="font-bold text-2xl">Ready to Optimize Your Farm?</h3><p class="text-gray-400 mt-2">Try our recommendation tools today or chat with Agro for more information.</p><div class="text-center text-gray-500 mt-8 border-t border-gray-700 pt-6">© 2025 AgriOptimize AI. All Rights Reserved.</div></div>
+    </footer>
+    
+    <!-- Chatbot UI (remains the same) -->
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const backendUrl = 'http://127.0.0.1:5000'; 
+        <script src="js/form-handler.js"></script>
+    <script src="js/chatbot.js"></script>
 
-            // --- UI ELEMENT SELECTORS ---
-            const tabs = {
-                crop: document.getElementById('tab-crop'),
-                fertilizer: document.getElementById('tab-fertilizer'),
-            };
-            const forms = {
-                crop: document.getElementById('form-crop-container'),
-                fertilizer: document.getElementById('form-fertilizer-container'),
-            };
-            const cropFormEl = document.getElementById('crop-form');
-            const fertilizerFormEl = document.getElementById('fertilizer-form');
-            const resultDivs = {
-                crop: document.getElementById('crop-result'),
-                fertilizer: document.getElementById('fertilizer-result'),
-            };
-
-            // --- TAB SWITCHING LOGIC ---
-            function switchTab(activeTab) {
-                Object.keys(tabs).forEach(tabKey => {
-                    const isTabActive = tabKey === activeTab;
-                    tabs[tabKey].classList.toggle('active', isTabActive);
-                    forms[tabKey].classList.toggle('hidden', !isTabActive);
-                });
-            }
-            tabs.crop.addEventListener('click', () => switchTab('crop'));
-            tabs.fertilizer.addEventListener('click', () => switchTab('fertilizer'));
-            
-            // --- GENERALIZED FORM HANDLING ---
-            const handleFormSubmit = async (e, formType) => {
-                e.preventDefault();
-                const form = e.target;
-                const button = form.querySelector('button[type="submit"]');
-                const btnText = button.querySelector('.btn-text');
-                const spinner = button.querySelector('.spinner');
-                const resultDiv = resultDivs[formType];
-                
-                // 1. Show loading state
-                btnText.textContent = 'Analyzing...';
-                spinner.classList.remove('hidden');
-                button.disabled = true;
-                resultDiv.classList.add('hidden');
-
-                // 2. Collect form data
-                const formData = new FormData(form);
-                let data = {};
-                if (formType === 'crop') {
-                    data = { 'n': formData.get('crop-n'), 'p': formData.get('crop-p'), 'k': formData.get('crop-k'), 'temperature': formData.get('crop-temp'), 'humidity': formData.get('crop-humidity'), 'ph': formData.get('crop-ph'), 'rainfall': formData.get('crop-rainfall') };
-                } else {
-                    data = { 'Temparature': formData.get('fert-temp'), 'Humidity': formData.get('fert-humidity'), 'Moisture': formData.get('fert-moisture'), 'Soil_Type': formData.get('fert-soil'), 'Crop_Type': formData.get('fert-crop'), 'Nitrogen': formData.get('fert-n'), 'Phosphorous': formData.get('fert-p'), 'Potassium': formData.get('fert-k') };
-                }
-                
-                // 3. Make API call
-                try {
-                    const response = await fetch(`${backendUrl}/api/recommend/${formType}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-                    const result = await response.json();
-                    if (!response.ok || result.error) throw new Error(result.error || 'Server responded with an error');
-                    
-                    const recommendation = result.crop || result.fertilizer;
-                    const resultTitle = formType === 'crop' ? 'Recommended Crop' : 'Recommended Fertilizer';
-                    
-                    // Display success
-                    resultDiv.innerHTML = `<div class="mt-6 p-4 border-l-4 border-green-500 bg-green-50 rounded-r-lg"><h3 class="font-bold text-lg text-green-800">${resultTitle}</h3><p class="text-2xl font-semibold text-gray-700 capitalize">${recommendation}</p></div>`;
-                    resultDiv.className = 'fade-in';
-
-                } catch (error) {
-                    // Display error
-                    resultDiv.innerHTML = `<div class="mt-6 p-4 border-l-4 border-red-500 bg-red-50 rounded-r-lg"><h3 class="font-bold text-red-800">An Error Occurred</h3><p class="text-gray-700">${error.message}</p></div>`;
-                    resultDiv.className = 'fade-in';
-                } finally {
-                    // 4. Reset button state
-                    btnText.textContent = formType === 'crop' ? 'Recommend Crop' : 'Recommend Fertilizer';
-                    spinner.classList.add('hidden');
-                    button.disabled = false;
-                }
-            };
-            
-            cropFormEl.addEventListener('submit', (e) => handleFormSubmit(e, 'crop'));
-            fertilizerFormEl.addEventListener('submit', (e) => handleFormSubmit(e, 'fertilizer'));
-
-            // --- AGRO CHATBOT LOGIC (Unchanged, but included for completeness) ---
-            const chatToggleBtn = document.getElementById('chat-toggle-btn');
-            const chatCloseBtn = document.getElementById('chat-close-btn');
-            const chatWindow = document.getElementById('chat-window');
-            const chatBox = document.getElementById('chat-box');
-            const chatInput = document.getElementById('chat-input');
-            const chatSendBtn = document.getElementById('chat-send-btn');
-            function toggleChat() { chatWindow.style.display = (chatWindow.style.display === 'none' || chatWindow.style.display === '') ? 'flex' : 'none'; if (chatWindow.style.display === 'flex') chatInput.focus(); }
-            chatToggleBtn.addEventListener('click', toggleChat);
-            chatCloseBtn.addEventListener('click', toggleChat);
-            function addMessage(text, type) {
-                const msgDiv = document.createElement('div');
-                msgDiv.className = `p-3 rounded-xl shadow-sm text-sm max-w-[85%] break-words ${type === 'user' ? 'msg-user' : 'msg-agro'}`;
-                msgDiv.innerHTML = text;
-                chatBox.appendChild(msgDiv);
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }
-            async function sendMessage() {
-                const message = chatInput.value.trim();
-                if (message === '') return;
-                addMessage(message, 'user');
-                chatInput.value = '';
-                chatInput.disabled = true;
-                const loadingId = 'loading-' + Date.now();
-                const loadingDiv = document.createElement('div');
-                loadingDiv.id = loadingId;
-                loadingDiv.className = 'p-3 rounded-xl shadow-sm text-sm max-w-[85%] msg-agro italic text-gray-500';
-                loadingDiv.textContent = 'Agro is thinking...';
-                chatBox.appendChild(loadingDiv);
-                chatBox.scrollTop = chatBox.scrollHeight;
-                try {
-                    const response = await fetch(`${backendUrl}/api/chat`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: message }) });
-                    const data = await response.json();
-                    document.getElementById(loadingId).remove();
-                    addMessage(data.reply.replace(/\n/g, '<br>'), 'agro');
-                } catch (error) {
-                    document.getElementById(loadingId).remove();
-                    addMessage('Sorry, I am having trouble connecting.', 'agro');
-                } finally {
-                    chatInput.disabled = false;
-                    chatInput.focus();
-                }
-            }
-            chatSendBtn.addEventListener('click', sendMessage);
-            chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
-        });
-    </script>
 </body>
 </html>
