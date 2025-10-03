@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const backendUrl = 'http://127.0.0.1:5000'; 
+    const backendUrl = 'https://agri-ai-fertilizer-model.onrender.com'; 
 
     // --- AGRO CHATBOT SELECTORS ---
     const chatToggleBtn = document.getElementById('chat-toggle-btn');
