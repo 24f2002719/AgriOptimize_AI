@@ -1,0 +1,6 @@
+Flask
+Flask-Cors
+requests
+google-generativeai
+gunicorn
+numpy==1.23.5
