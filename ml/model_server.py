@@ -40,4 +40,4 @@ def recommend():
 if __name__ == '__main__':
     # Before running, train the model by running train.py first!
     print("Starting ML Model Server for Crop Recommendation...")
-    app.run(port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=False)
