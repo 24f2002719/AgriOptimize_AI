@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // This line was missing. It defines the URL for your main backend server.
     // For local development, use 'http://127.0.0.1:5000'.
     // For production, change this to your deployed Render URL.
-    const backendUrl = 'https://agri-ai-fertilizer-model.onrender.com';
+    const backendUrl = 'https://agri-ai-backend-dmev.onrender.com';
 
     // ==============================================================================
 
