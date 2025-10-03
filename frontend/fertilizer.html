@@ -8,62 +8,106 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="min-h-screen flex flex-col">
+
     <!-- Header & Navbar -->
     <header class="glass-nav sticky top-0 z-40">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="flex items-center gap-2"><svg class="w-8 h-8 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375" /></svg><h1 class="text-2xl font-bold text-gray-800">AgriOptimize <span class="text-green-600">AI</span></h1></a>
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-2">
+                <svg class="w-8 h-8 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375" /></svg>
+                <h1 class="text-2xl font-bold text-gray-800">AgriOptimize <span class="text-green-600">AI</span></h1>
+            </a>
+            <!-- Main Navigation with Translation Keys -->
             <nav class="hidden md:flex items-center gap-8 text-gray-600 font-medium">
-                <a href="index.html" class="nav-link py-2">Home</a>
-                <a href="crop.html" class="nav-link py-2">Crop Recommendation</a>
-                <a href="fertilizer.html" class="nav-link active py-2">Fertilizer Recommendation</a>
+                <a href="index.html" class="nav-link py-2" data-translate-key="navHome">Home</a>
+                <a href="crop.html" class="nav-link py-2" data-translate-key="navCrop">Crop Recommendation</a>
+                <a href="fertilizer.html" class="nav-link active py-2" data-translate-key="navFertilizer">Fertilizer Recommendation</a>
             </nav>
+            <!-- Language Switcher -->
+            <div class="flex items-center gap-2 font-medium text-gray-600">
+                <button class="lang-switcher" data-lang="en">EN</button>
+                <span class="text-gray-300">|</span>
+                <button class="lang-switcher" data-lang="hi">HI</button>
+            </div>
         </div>
     </header>
 
     <main class="flex-grow flex items-center justify-center container mx-auto p-4 md:p-8">
         <div class="w-full max-w-3xl bg-white rounded-xl shadow-lg p-8 md:p-12 fade-in">
             <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold text-gray-800">AI Fertilizer Recommendation</h2>
-                <p class="text-gray-500 mt-2">Provide your field conditions to receive a precise fertilizer prediction.</p>
+                <h2 class="text-3xl font-bold text-gray-800" data-translate-key="fertPageTitle">AI Fertilizer Recommendation</h2>
+                <p class="text-gray-500 mt-2" data-translate-key="fertPageSubtitle">Provide your field conditions to receive a precise fertilizer prediction.</p>
             </div>
             <form id="fertilizer-form" class="space-y-6">
                 <!-- Temp, Humidity, Moisture -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div><label class="font-medium text-gray-600">Temp (°C)</label><input type="number" step="any" name="fert-temp" placeholder="e.g., 26" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required></div>
-                    <div><label class="font-medium text-gray-600">Humidity (%)</label><input type="number" step="any" name="fert-humidity" placeholder="e.g., 52" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required></div>
-                    <div><label class="font-medium text-gray-600">Moisture</label><input type="number" step="any" name="fert-moisture" placeholder="e.g., 38" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required></div>
+                    <div>
+                        <label class="font-medium text-gray-600" data-translate-key="labelTemp">Temp (°C)</label>
+                        <input type="number" step="any" name="fert-temp" placeholder="e.g., 26" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div>
+                        <label class="font-medium text-gray-600" data-translate-key="labelHumidity">Humidity (%)</label>
+                        <input type="number" step="any" name="fert-humidity" placeholder="e.g., 52" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                    <div>
+                        <label class="font-medium text-gray-600" data-translate-key="labelMoisture">Moisture</label>
+                        <input type="number" step="any" name="fert-moisture" placeholder="e.g., 38" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required>
+                    </div>
                 </div>
                 <!-- Soil Type, Crop Type -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div><label class="font-medium text-gray-600">Soil Type</label><select name="fert-soil" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required><option value="">Select...</option><option>Sandy</option><option>Loamy</option><option>Black</option><option>Red</option><option>Clayey</option></select></div>
-                    <div><label class="font-medium text-gray-600">Crop Type</label><select name="fert-crop" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required><option value="">Select...</option><option>Maize</option><option>Sugarcane</option><option>Cotton</option><option>Tobacco</option><option>Paddy</option><option>Barley</option><option>Wheat</option><option>Millets</option><option>Oil seeds</option><option>Pulses</option></select></div>
+                    <div>
+                        <label class="font-medium text-gray-600" data-translate-key="labelSoilType">Soil Type</label>
+                        <select name="fert-soil" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required>
+                            <option value="">Select...</option><option>Sandy</option><option>Loamy</option><option>Black</option><option>Red</option><option>Clayey</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="font-medium text-gray-600" data-translate-key="labelCropType">Crop Type</label>
+                        <select name="fert-crop" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required>
+                            <option value="">Select...</option><option>Maize</option><option>Sugarcane</option><option>Cotton</option><option>Tobacco</option><option>Paddy</option><option>Barley</option><option>Wheat</option><option>Millets</option><option>Oil seeds</option><option>Pulses</option>
+                        </select>
+                    </div>
                 </div>
                 <!-- N, P, K Inputs -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                     <div><label class="font-medium text-gray-600">Nitrogen (N)</label><input type="number" step="any" name="fert-n" placeholder="e.g., 37" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required></div>
-                     <div><label class="font-medium text-gray-600">Phosphorous (P)</label><input type="number" step="any" name="fert-p" placeholder="e.g., 0" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required></div>
-                     <div><label class="font-medium text-gray-600">Potassium (K)</label><input type="number" step="any" name="fert-k" placeholder="e.g., 0" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required></div>
+                     <div>
+                        <label class="font-medium text-gray-600" data-translate-key="labelN">Nitrogen (N)</label>
+                        <input type="number" step="any" name="fert-n" placeholder="e.g., 37" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                     <div>
+                        <label class="font-medium text-gray-600" data-translate-key="labelPhosphorous">Phosphorous (P)</label>
+                        <input type="number" step="any" name="fert-p" placeholder="e.g., 0" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required>
+                    </div>
+                     <div>
+                        <label class="font-medium text-gray-600" data-translate-key="labelK">Potassium (K)</label>
+                        <input type="number" step="any" name="fert-k" placeholder="e.g., 0" class="mt-1 w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500" required>
+                    </div>
                 </div>
-                <button type="submit" class="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition font-semibold text-lg flex items-center justify-center gap-2 disabled:bg-green-400"><span class="btn-text">Recommend Fertilizer</span><div class="spinner hidden"></div></button>
+                <button type="submit" class="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition font-semibold text-lg flex items-center justify-center gap-2 disabled:bg-green-400">
+                    <span class="btn-text" data-translate-key="btnRecommendFertilizer">Recommend Fertilizer</span>
+                    <div class="spinner hidden"></div>
+                </button>
             </form>
             <div id="result-container" class="mt-6"></div>
         </div>
-        <!-- ================= AGRO CHATBOT UI ================= -->
-    <!-- Floating Button -->
-    <button id="chat-toggle-btn" class="fixed bottom-6 right-6 bg-green-700 hover:bg-green-800 text-white p-4 rounded-full shadow-lg transition transform hover:scale-105 z-50 flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.17 48.17 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" /></svg>
-        <span class="font-semibold hidden sm:block">Chat with Agro</span>
-    </button>
-    <!-- Chat Window -->
-    <div id="chat-window" class="fixed bottom-24 right-6 w-full max-w-sm h-[500px] bg-white rounded-xl shadow-2xl flex-col border border-gray-200">
-        <div class="bg-green-700 text-white p-4 rounded-t-xl flex justify-between items-center"><div class="font-bold flex items-center gap-2">🌱 Agro Assistant</div><button id="chat-close-btn" class="text-gray-200 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg></button></div>
-        <div id="chat-box" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3 bg-gray-50"><div class="p-3 rounded-xl shadow-sm text-sm max-w-[85%] msg-agro">Hello! I'm <strong>Agro</strong>. How can I help you today?</div></div>
-        <div class="p-3 border-t bg-white rounded-b-xl flex gap-2"><input type="text" id="chat-input" class="flex-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Type your question..."><button id="chat-send-btn" class="bg-green-600 text-white p-2 rounded-md hover:bg-green-700 transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" /></svg></button></div>
-    </div>
     </main>
 
-        <script src="js/form-handler.js"></script>
+    <!-- ================= AGRO CHATBOT UI ================= -->
+    <button id="chat-toggle-btn" class="fixed bottom-6 right-6 bg-green-700 hover:bg-green-800 text-white p-4 rounded-full shadow-lg transition transform hover:scale-105 z-50 flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.17 48.17 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" /></svg>
+        <span class="font-semibold hidden sm:block" data-translate-key="chatToggle">Chat with Agro</span>
+    </button>
+    <div id="chat-window" class="fixed bottom-24 right-6 w-full max-w-sm h-[500px] bg-white rounded-xl shadow-2xl flex-col border border-gray-200">
+        <div class="bg-green-700 text-white p-4 rounded-t-xl flex justify-between items-center"><div class="font-bold flex items-center gap-2">🌱 Agro Assistant</div><button id="chat-close-btn" class="text-gray-200 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg></button></div>
+        <div id="chat-box" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3 bg-gray-50"><div class="p-3 rounded-xl shadow-sm text-sm max-w-[85%] msg-agro" data-translate-key="chatWelcome">Hello! I'm <strong>Agro</strong>. How can I help you today?</div></div>
+        <div class="p-3 border-t bg-white rounded-b-xl flex gap-2"><input type="text" id="chat-input" class="flex-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" data-placeholder-key="chatPlaceholder" placeholder="Type your question..."><button id="chat-send-btn" class="bg-green-600 text-white p-2 rounded-md hover:bg-green-700 transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" /></svg></button></div>
+    </div>
+    
+    <!-- The order of these scripts is CRITICAL for functionality -->
+    <script src="js/translations.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/form-handler.js"></script>
     <script src="js/chatbot.js"></script>
-
 </body>
 </html>

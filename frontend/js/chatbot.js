@@ -53,27 +53,38 @@ document.addEventListener('DOMContentLoaded', () => {
         chatInput.value = '';
         chatInput.disabled = true;
 
-        // Add a "typing..." indicator
+        // --- LANGUAGE AWARE FIX ---
+        // 1. Get the currently selected language from browser storage.
+        const currentLang = localStorage.getItem('language') || 'en';
+
+        // 2. Use the translations object for the "thinking" message.
+        const thinkingMessage = translations['chatThinking'][currentLang];
+
+        // Add a "typing..." indicator in the correct language
         const loadingId = 'loading-' + Date.now();
         const loadingDiv = document.createElement('div');
         loadingDiv.id = loadingId;
         loadingDiv.className = 'p-3 rounded-xl shadow-sm text-sm max-w-[85%] msg-agro italic text-gray-500';
-        loadingDiv.textContent = 'Agro is thinking...';
+        loadingDiv.textContent = thinkingMessage; // Use the translated text
         chatBox.appendChild(loadingDiv);
         chatBox.scrollTop = chatBox.scrollHeight;
 
         try {
+            // 3. Send the message AND the current language to the backend.
             const response = await fetch(`${backendUrl}/api/chat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: message })
+                body: JSON.stringify({ 
+                    message: message,
+                    language: currentLang // Send the language to the backend
+                })
             });
             const data = await response.json();
 
             document.getElementById(loadingId).remove(); // Remove the typing indicator
-            // Replace newlines from the AI's response with HTML line breaks
             const formattedReply = data.reply.replace(/\n/g, '<br>'); 
             addMessage(formattedReply, 'agro');
+
         } catch (error) {
             console.error("Chatbot API error:", error);
             document.getElementById(loadingId).remove();
