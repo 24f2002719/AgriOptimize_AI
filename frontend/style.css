@@ -1,0 +1,66 @@
+/* --- Google Fonts (Poppins) --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* --- CSS Variables for Easy Theming --- */
+:root {
+    --primary-green: #16a34a;
+    --primary-green-dark: #15803d;
+    --text-dark: #1f2937;
+    --text-light: #4b5563;
+    --bg-light: #f9fafb;
+    --border-color: #e5e7eb;
+}
+
+/* --- Base Styles --- */
+body { 
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+/* --- Hero Section Background --- */
+.hero-bg {
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=1974&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Creates a nice parallax effect */
+}
+
+/* --- Glassmorphism Navbar --- */
+.glass-nav {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    --webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(230, 230, 230, 0.5);
+}
+
+/* --- Animations & Spinner (Unchanged) --- */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in { animation: fadeIn 0.6s ease-out forwards; }
+.spinner { border: 2px solid rgba(255, 255, 255, 0.3); border-top-color: #fff; border-radius: 50%; width: 1rem; height: 1rem; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* --- Navbar Link Styles --- */
+.nav-link { transition: all 0.3s ease; border-bottom: 2px solid transparent; }
+.nav-link:hover { color: var(--primary-green); border-bottom-color: var(--primary-green); }
+.nav-link.active { color: var(--primary-green-dark); font-weight: 600; border-bottom-color: var(--primary-green-dark); }
+
+/* --- Card & Button Styles --- */
+.feature-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.feature-card:hover { transform: translateY(-8px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); }
+
+/* --- FAQ Accordion (Unchanged) --- */
+.faq-question { cursor: pointer; transition: background-color 0.3s ease; }
+.faq-question:hover { background-color: #f3f4f6; }
+.faq-answer { max-height: 0; overflow: hidden; transition: all 0.5s ease-in-out; }
+.faq-question.open .faq-answer { max-height: 200px; padding-top: 1rem; padding-bottom: 1rem; }
+.faq-question .icon { transition: transform 0.3s ease; }
+.faq-question.open .icon { transform: rotate(180deg); }
+
+/* --- Chatbot Styles (Unchanged) --- */
+#chat-window { display: none; z-index: 50; }
+#chat-box::-webkit-scrollbar { width: 6px; }
+#chat-box::-webkit-scrollbar-track { background: #f1f1f1; }
+#chat-box::-webkit-scrollbar-thumb { background: #888; border-radius: 3px; }
+.msg-user { background-color: #dcfce7; align-self: flex-end; margin-left: auto; border-bottom-right-radius: 0; }
+.msg-agro { background-color: #f3f4f6; align-self: flex-start; margin-right: auto; border-bottom-left-radius: 0; }
