@@ -4,8 +4,16 @@ import requests
 import google.generativeai as genai
 import os
 
-app = Flask(__name__)
-CORS(app)
+CORS(app, resources={
+    r"/api/*": {
+        "origins": [
+            "https://agri-optimize-ai.vercel.app"
+            # You could add "http://127.0.0.1:5500" or your local file path for local testing if needed
+        ]
+    }
+})
+
+
 
 # --- CONFIGURATION ---
 
