@@ -4,11 +4,13 @@ import requests
 import google.generativeai as genai
 import os
 
+app = Flask(__name__)
+
 CORS(app, resources={
     r"/api/*": {
         "origins": [
-            "https://agri-optimize-ai.vercel.app"
-            # You could add "http://127.0.0.1:5500" or your local file path for local testing if needed
+            "https://agri-optimize-ai.vercel.app" 
+            # Make sure this URL is exactly your Vercel app's URL
         ]
     }
 })
@@ -18,8 +20,9 @@ CORS(app, resources={
 # --- CONFIGURATION ---
 
 # URLs for ML Servers
-CROP_RECOMMENDATION_URL = 'http://127.0.0.1:5001/recommend' 
-FERTILIZER_RECOMMENDATION_URL = 'http://127.0.0.1:5002/recommend_fertilizer'
+CROP_RECOMMENDATION_URL = os.environ.get('CROP_RECOMMENDATION_URL')
+FERTILIZER_RECOMMENDATION_URL = os.environ.get('FERTILIZER_RECOMMENDATION_URL')
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
 
 # --- CHATBOT CONFIGURATION (Agro) ---
 # ⚠️ PASTE YOUR ACTUAL API KEY HERE ⚠️
@@ -89,4 +92,4 @@ def chat_with_agro():
 
 if __name__ == '__main__':
     print("Starting Main Backend Server with Multi-Language Agro...")
-    app.run(port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=False)
